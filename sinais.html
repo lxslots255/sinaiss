@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Sinais do LX</title>
+    <style>
+        body {
+            text-align: center;
+            font-weight: bold;
+            background: linear-gradient(45deg, #3498db, #e47467, #e91e63);
+            background-size: 400% 400%;
+            animation: gradient 10s linear infinite;
+        }
+
+        @keyframes gradient {
+            0% {
+                background-position: 0% 50%;
+            }
+            100% {
+                background-position: 100% 50%;
+            }
+        }
+
+        button {
+            font-size: 24px;
+            margin: 60px;
+            padding: 10px 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>Sinais do LX</h1>
+    
+    <button id="GerarEntrada">Gerar entrada</button>
+    
+    <script>
+        // Variável para controlar o tempo da última geração de entrada
+        let ultimaGeracao = 0;
+
+        // Função para gerar um número aleatório entre 1.5x e 20x
+        function gerarNumeroAleatorio() {
+            const min = 1.5;
+            const max = 20;
+            const entrada = (Math.random() * (max - min) + min).toFixed(1) + 'x';
+            return entrada;
+        }
+
+        // Função para redirecionar para o site recomendado
+        function redirecionarParaSite() {
+            window.open('https://brx.bet/?ref=11c51f36d125', '_blank');
+        }
+
+        // Função para verificar se é permitido gerar a entrada novamente (a cada 5 minutos)
+        function podeGerarEntrada() {
+            const agora = new Date().getTime();
+            const diferenca = agora - ultimaGeracao;
+            const tempoEspera = 5 * 60 * 1000; // 5 minutos em milissegundos
+            return diferenca >= tempoEspera;
+        }
+
+        // Função para atualizar o tempo da última geração de entrada
+        function atualizarTempoGeracao() {
+            ultimaGeracao = new Date().getTime();
+        }
+
+        // Adicionar um ouvinte de eventos para o botão de geração de entrada
+        document.getElementById('GerarEntrada').addEventListener('click', function() {
+            if (podeGerarEntrada()) {
+                atualizarTempoGeracao();
+                const entradaGerada = gerarNumeroAleatorio();
+                const horarioAtual = new Date().toLocaleTimeString();
+                const quantidadeTentativas = Math.floor(Math.random() * (15 - 5 + 1)) + 5;
+
+                // Exibir as informações em uma nova aba com fundo animado levemente ofuscado e texto em negrito e tamanho de fonte de 30px
+                const infoWindow = window.open('', '_blank');
+                infoWindow.document.write('<html><head><title>Informações da Entrada</title>');
+                infoWindow.document.write('<style>');
+                infoWindow.document.write('body {');
+                infoWindow.document.write('text-align: center;');
+                infoWindow.document.write('font-weight: bold;');
+                infoWindow.document.write('background: linear-gradient(45deg, rgba(52, 152, 219, 0.7), rgba(233, 30, 99, 0.7), rgba(231, 76, 60, 0.7));');
+                infoWindow.document.write('background-size: 400% 400%;');
+                infoWindow.document.write('animation: gradient 10s linear infinite;');
+                infoWindow.document.write('}');
+                infoWindow.document.write('</style></head><body>');
+                infoWindow.document.write('<h2 style="font-size: 30px;">Informações da Entrada</h2>');
+                infoWindow.document.write('<p style="font-size: 30px;">Jogo: Ninja Crash</p>');
+                infoWindow.document.write('<p style="font-size: 30px;">Horário Atual: ' + horarioAtual + '</p>');
+                infoWindow.document.write('<p style="font-size: 30px;">Entrada: ' + entradaGerada + '</p>');
+                infoWindow.document.write('<p style="font-size: 30px;">Quantidade de Tentativas: ' + quantidadeTentativas + '</p>');
+                infoWindow.document.write('<p style="font-size: 30px;">Validade: 6 Minutos</p>');
+                infoWindow.document.write('<button onclick="window.close()" style="font-size: 30px;">Fechar</button>');
+                infoWindow.document.write('</body></html>');
+            } else {
+                alert('Aguarde pelo menos 5 minutos antes de gerar outra entrada.');
+            }
+        });
+    </script>
+
+    <br>
+    <button onclick="redirecionarParaSite()" style="font-size: 25px; font-weight: bold;">Clique aqui</button>
+</body>
+</html>
